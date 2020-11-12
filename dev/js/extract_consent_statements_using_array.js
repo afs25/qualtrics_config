@@ -12,7 +12,7 @@ Qualtrics.SurveyEngine.addOnReady(function()
 Qualtrics.SurveyEngine.addOnPageSubmit(function()
 {
     /*Place your JavaScript here to run when the page is submitted*/
-	var consent_dict = new Object();
+	var consent_array = new Array();
 
 	let questions = Qualtrics.SurveyEngine.QuestionInfo;
 	var question_index;
@@ -26,9 +26,11 @@ Qualtrics.SurveyEngine.addOnPageSubmit(function()
 			choice_text = choices[choice_index].Text;
 			answer_code = question_data.getSelectedAnswerValue(choice_index);
 			answer_text = answers[answer_code].Display;
-			consent_dict[choice_text] = answer_text;
+			let statement_dict = new Object();
+			statement_dict[choice_text] = answer_text
+			consent_array.push(statement_dict);
 		}
 	}
 
-	Qualtrics.SurveyEngine.setEmbeddedData('consent_statements', JSON.stringify(consent_dict));
+	Qualtrics.SurveyEngine.setEmbeddedData('consent_statements', JSON.stringify(consent_array));
 });
